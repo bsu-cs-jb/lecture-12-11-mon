@@ -5,6 +5,7 @@ import {
   ViewProps,
   useWindowDimensions,
 } from "react-native";
+import { dims } from "./DeviceSettings";
 
 export default function IPhone14Device(props: ViewProps) {
   const { width, height } = useWindowDimensions();
@@ -19,31 +20,6 @@ export default function IPhone14Device(props: ViewProps) {
     </View>
   );
 }
-
-const SCREEN_PPI = 72;
-
-const DIMENSIONS = {
-  iPhone12: {
-    height: 2532,
-    width: 1170,
-    ppi: 460,
-  },
-};
-
-const emulate = DIMENSIONS.iPhone12;
-const TARGET_DIMS = {
-  width: 216,
-  ratio: 2.05,
-};
-const dims = {
-  width: PixelRatio.getPixelSizeForLayoutSize(TARGET_DIMS.width),
-  height: PixelRatio.getPixelSizeForLayoutSize(
-    TARGET_DIMS.width * TARGET_DIMS.ratio,
-  ),
-  outerBorderRadius: 60,
-  innerBorderRadius: 44,
-  innerMargin: 20,
-};
 
 const styles = StyleSheet.create({
   deviceShell: {

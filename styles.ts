@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { dims } from "./DeviceSettings";
 
 const sharedStyles = StyleSheet.create({
   box: {
@@ -87,7 +88,6 @@ const sharedStyles = StyleSheet.create({
     width: "100%",
     flexDirection: "row",
     alignItems: "flex-end",
-    // height: 40,
   },
   formColumn: {
     flex: 1,
@@ -101,11 +101,11 @@ const sharedStyles = StyleSheet.create({
     width: "100%",
   },
   modalTop: {
+    width: dims.width,
+    height: dims.height,
     flex: 1,
     justifyContent: "center",
-    // paddingHorizontal: 20,
-    // padding: 20,
-    backgroundColor: "#ddd",
+    backgroundColor: "#333c",
   },
   modalContainer: {
     justifyContent: "center",
