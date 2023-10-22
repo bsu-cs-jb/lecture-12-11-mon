@@ -1,20 +1,28 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, View } from "react-native";
+import { FlexFill, LabelText, TitleText } from "./Shared";
+import IPhone14Device from "./iPhoneDevice";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <IPhone14Device>
+      <View style={styles.container}>
+        <TitleText>Top iPhone Title</TitleText>
+        <FlexFill />
+        <LabelText>Bottom Text</LabelText>
+        <StatusBar style="auto" />
+      </View>
+    </IPhone14Device>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fdf",
+    alignItems: "center",
+    paddingTop: 35,
+    paddingBottom: 20,
+    paddingHorizontal: 10,
   },
 });
