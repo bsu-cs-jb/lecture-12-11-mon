@@ -53,8 +53,8 @@ export function range(startOrEnd: number, end?: number): number[] {
   }
 }
 
-export function log(text: string) {
-  console.log(`${ts()}: ${text}`);
+export function log(...data: any[]) {
+  console.log(`${ts()}:`, ...data);
 }
 
 export function rand(n = 2) {

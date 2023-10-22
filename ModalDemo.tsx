@@ -39,28 +39,40 @@ export default function ModalDemo() {
   ]);
   const [modalVisible, setModalVisible] = useState(false);
   const [editName, setEditName] = useState("");
+  const [addOrEdit, setAddOrEdit] = useState<"add" | "edit">("add");
   const [editId, setEditId] = useState<string | null>(null);
 
-  for (const _k of range(30)) {
-    console.log(genid());
-  }
+  const dismissModal = () => {
+    setModalVisible(false);
+    setEditId(null);
+    setEditName("");
+  };
 
   const handleSave = (name: string) => {
-    setEntries([
-      ...entries,
-      {
-        id: genid(),
-        name,
-      },
-    ]);
-    setModalVisible(false);
+    dismissModal();
+    if (addOrEdit === "add") {
+      setEntries([
+        ...entries,
+        {
+          id: genid(),
+          name,
+        },
+      ]);
+    } else if (addOrEdit === "edit") {
+      setEntries(
+        entries.map((entry) =>
+          entry.id === editId ? { ...entry, name } : entry,
+        ),
+      );
+    }
   };
   const handleCancel = () => {
-    setModalVisible(false);
+    dismissModal();
   };
 
   const handleAddEntry = () => {
     setModalVisible(true);
+    setAddOrEdit("add");
   };
 
   const handleDelete = (entry: Entry) => {
@@ -70,6 +82,10 @@ export default function ModalDemo() {
 
   const handleEdit = (entry: Entry) => {
     log(`handleEdit(${entry.name})`);
+    setAddOrEdit("edit");
+    setEditId(entry.id);
+    setEditName(entry.name);
+    setModalVisible(true);
   };
 
   const handleView = (entry: Entry) => {
