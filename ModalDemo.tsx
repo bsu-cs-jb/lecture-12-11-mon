@@ -4,20 +4,28 @@ import { BigButton, FlexFill, LabelText, TitleText } from "./Shared";
 import { useState } from "react";
 import sharedStyles from "./styles";
 import { EditWatchlistModal } from "./EditWatchlistModal";
+import { genid, log, range } from "./utils";
 
 interface Entry {
   id: string;
   name: string;
 }
 
-function EntryView({ entry }: { entry: Entry }) {
+interface EntryViewProps {
+  entry: Entry;
+  onDelete: (entry: Entry) => void;
+  onEdit: (entry: Entry) => void;
+  onView: (entry: Entry) => void;
+}
+
+function EntryView({ entry, onDelete, onEdit, onView }: EntryViewProps) {
   return (
     <View style={sharedStyles.horzContainer}>
       <LabelText>{entry.name}</LabelText>
       <FlexFill />
-      <BigButton title="Del" onPress={() => console.log("Del")} />
-      <BigButton title="Edit" onPress={() => console.log("Edit")} />
-      <BigButton title="View" onPress={() => console.log("View")} />
+      <BigButton title="Del" onPress={() => onDelete(entry)} />
+      <BigButton title="Edit" onPress={() => onEdit(entry)} />
+      <BigButton title="View" onPress={() => onView(entry)} />
     </View>
   );
 }
@@ -25,7 +33,7 @@ function EntryView({ entry }: { entry: Entry }) {
 export default function ModalDemo() {
   const [entries, setEntries] = useState([
     {
-      id: "23ds",
+      id: genid(),
       name: "Chester",
     },
   ]);
@@ -33,26 +41,41 @@ export default function ModalDemo() {
   const [editName, setEditName] = useState("");
   const [editId, setEditId] = useState<string | null>(null);
 
+  for (const _k of range(30)) {
+    console.log(genid());
+  }
+
   const handleSave = (name: string) => {
+    setEntries([
+      ...entries,
+      {
+        id: genid(),
+        name,
+      },
+    ]);
     setModalVisible(false);
   };
   const handleCancel = () => {
     setModalVisible(false);
   };
 
-  const handleShowModal = () => {
+  const handleAddEntry = () => {
     setModalVisible(true);
   };
 
-  const handleAdd = () => {
-    setEntries([
-      ...entries,
-      {
-        id: `23ds-${entries.length}`,
-        name: "Hello",
-      },
-    ]);
+  const handleDelete = (entry: Entry) => {
+    log(`handleDelete(${entry.name}) ${entry.id}`);
+    setEntries(entries.filter((e) => e.id !== entry.id));
   };
+
+  const handleEdit = (entry: Entry) => {
+    log(`handleEdit(${entry.name})`);
+  };
+
+  const handleView = (entry: Entry) => {
+    log(`handleView(${entry.name})`);
+  };
+
   return (
     <View style={styles.container}>
       <EditWatchlistModal
@@ -66,14 +89,17 @@ export default function ModalDemo() {
         style={{ width: "100%" }}
         contentContainerStyle={{ alignItems: "flex-start", gap: 5 }}
       >
-        <FlexFill />
         {entries.map((entry) => (
-          <EntryView key={entry.id} entry={entry} />
+          <EntryView
+            key={entry.id}
+            entry={entry}
+            onDelete={handleDelete}
+            onEdit={handleEdit}
+            onView={handleView}
+          />
         ))}
       </ScrollView>
-      <BigButton title="Add entry" onPress={handleAdd} />
-      <BigButton title="Show Modal" onPress={handleShowModal} />
-      <LabelText>Bottom Text</LabelText>
+      <BigButton title="Add entry" onPress={handleAddEntry} />
       <StatusBar style="auto" />
     </View>
   );
@@ -87,5 +113,6 @@ const styles = StyleSheet.create({
     paddingTop: 35,
     paddingBottom: 20,
     paddingHorizontal: 10,
+    gap: 8,
   },
 });

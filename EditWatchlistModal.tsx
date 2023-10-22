@@ -24,6 +24,7 @@ export function EditWatchlistModal({
   }, [name]);
   const handleSave = () => {
     onSave(newName);
+    setNewName("");
   };
 
   return (
