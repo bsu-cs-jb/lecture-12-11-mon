@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect, useRef, useState } from "react";
+import { PropsWithChildren, useEffect, useRef, useState } from "react";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -7,6 +7,8 @@ import {
   PressableProps,
   StyleProp,
   Text,
+  TextInput,
+  TextInputProps,
   TextProps,
   TextStyle,
   View,
@@ -16,7 +18,7 @@ import {
 import styles from "./styles";
 import { useScale } from "./ScaleContext";
 
-const RENDER_HIGHLIGHT = false;
+const RENDER_HIGHLIGHT = true;
 
 interface CustomStyleTextProps extends TextProps {
   customStyle?: StyleProp<TextStyle>;
@@ -182,7 +184,7 @@ export function BigButton({ title, onPress, style, ...props }: BigButtonProps) {
   return (
     <Pressable
       style={({ pressed }) => [
-        style,
+        scaleStyle(style),
         scaleStyle(
           pressed ? styles.bigButtonPressed : styles.bigButtonUnpressed,
         ),
@@ -193,4 +195,36 @@ export function BigButton({ title, onPress, style, ...props }: BigButtonProps) {
       <LabelText>{title}</LabelText>
     </Pressable>
   );
+}
+
+interface LctInputProps extends TextInputProps {}
+
+export function LctInput({ style, ...props }: LctInputProps) {
+  const { scaleStyle } = useScale();
+  const computedStyle = React.useMemo(
+    () => [scaleStyle(styles.input), scaleStyle(style)],
+    [styles.input, style, scaleStyle],
+  );
+  return <TextInput style={computedStyle} {...props} />;
+}
+
+export function Form({
+  style,
+  children,
+}: PropsWithChildren<{ style?: ViewStyle }>) {
+  return <View style={[styles.formContainer, style]}>{children}</View>;
+}
+
+export function FormRow({
+  style,
+  children,
+}: PropsWithChildren<{ style?: ViewStyle }>) {
+  return <View style={[styles.formRow, style]}>{children}</View>;
+}
+
+export function FormColumn({
+  style,
+  children,
+}: PropsWithChildren<{ style?: ViewStyle }>) {
+  return <View style={[styles.formColumn, style]}>{children}</View>;
 }
