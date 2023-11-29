@@ -12,19 +12,24 @@ const DIMENSIONS = {
 
 const emulate = DIMENSIONS.iPhone12;
 const TARGET_DIMS = {
-  width: 216,
+  width: 432,
   ratio: 2.05,
 };
 
 const screenDims = Dimensions.get("screen");
 
+const pixelRatioScaled = {
+  width: PixelRatio.getPixelSizeForLayoutSize(TARGET_DIMS.width),
+  height: PixelRatio.getPixelSizeForLayoutSize(
+    TARGET_DIMS.width * TARGET_DIMS.ratio,
+  ),
+};
+
 export const dims = {
   ...(Platform.OS === "web"
     ? {
-        width: PixelRatio.getPixelSizeForLayoutSize(TARGET_DIMS.width),
-        height: PixelRatio.getPixelSizeForLayoutSize(
-          TARGET_DIMS.width * TARGET_DIMS.ratio,
-        ),
+        width: TARGET_DIMS.width,
+        height: TARGET_DIMS.width * TARGET_DIMS.ratio,
       }
     : {
         width: screenDims.width,
