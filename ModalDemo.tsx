@@ -4,7 +4,8 @@ import { BigButton, FlexFill, LabelText, TitleText } from "./Shared";
 import { useState } from "react";
 import sharedStyles from "./styles";
 import { EditWatchlistModal } from "./EditWatchlistModal";
-import { genid, log, range } from "./utils";
+import { log, range } from "./utils";
+import { genid } from "./genid";
 
 interface Entry {
   id: string;
