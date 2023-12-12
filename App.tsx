@@ -1,10 +1,10 @@
 import React from "react";
 import { Platform } from "react-native";
-import ModalDemo from "./ModalDemo";
 import IPhone14Device from "./iPhoneDevice";
+import DemoApi from "./DemoApi";
 
 function WrappedApp() {
-  const app = <ModalDemo />;
+  const app = <DemoApi />;
   if (Platform.OS === "web") {
     return <IPhone14Device>{app}</IPhone14Device>;
   } else {

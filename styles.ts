@@ -33,8 +33,11 @@ const sharedStyles = StyleSheet.create({
   flexFill: {
     flex: 1,
   },
-  scrollContainer: {
+  scroll: {
     flex: 1,
+    width: "100%",
+  },
+  scrollContainer: {
     alignSelf: "flex-start",
     width: "100%",
   },
@@ -99,7 +102,6 @@ const sharedStyles = StyleSheet.create({
     fontSize: 18,
     borderWidth: 1,
     padding: 7,
-    flex: 1,
     width: "100%",
   },
   modalTop: {
