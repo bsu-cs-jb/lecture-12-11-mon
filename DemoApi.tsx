@@ -5,11 +5,8 @@ import { useCallback, useState } from "react";
 import { Buffer } from "buffer";
 import sharedStyles from "./styles";
 
-// const URL = "http://cs411.duckdns.org";
-const URL = "http://localhost:3000";
-// const URL = "http://172.20.2.238:3000";
-// const CLIENT_ID = "brahbrah";
-// const CLIENT_SECRET = "secret";
+const URL = "http://cs411.duckdns.org";
+// const URL = "http://localhost:3000";
 
 function base64(input: string): string {
   return Buffer.from(input, "utf8").toString("base64");
