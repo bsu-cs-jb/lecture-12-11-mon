@@ -14,6 +14,7 @@ function base64(input: string): string {
 
 export default function DemoApi() {
   const [fetching, setFetching] = useState(false);
+  const [errorText, setErrorText] = useState("");
   const [clientId, setClientId] = useState("");
   const [clientSecret, setClientSecret] = useState("");
   const [token, setToken] = useState("");
@@ -27,6 +28,7 @@ export default function DemoApi() {
       return;
     }
     setFetching(true);
+    setErrorText("");
     fetch(`${URL}/indecisive/current-session`, {
       headers: new Headers({
         Authorization: `Bearer ${token}`,
@@ -40,6 +42,7 @@ export default function DemoApi() {
           return response.text().then((error_txt) => {
             const message = `Status: ${response.status} Body: ${error_txt}`;
             setFetching(false);
+            setErrorText(message);
             throw new Error(message);
           });
         }
@@ -56,6 +59,7 @@ export default function DemoApi() {
       })
       .catch((err) => {
         setFetching(false);
+        setErrorText(err.message);
         console.error("Error fetching token", err);
       });
   };
@@ -67,6 +71,7 @@ export default function DemoApi() {
       return;
     }
     setFetching(true);
+    setErrorText("");
     fetch(`${URL}/indecisive/self`, {
       headers: new Headers({
         Authorization: `Bearer ${token}`,
@@ -79,6 +84,7 @@ export default function DemoApi() {
           return response.text().then((error_txt) => {
             const message = `Status: ${response.status} Body: ${error_txt}`;
             setFetching(false);
+            setErrorText(message);
             throw new Error(message);
           });
         }
@@ -95,6 +101,7 @@ export default function DemoApi() {
       })
       .catch((err) => {
         setFetching(false);
+        setErrorText(err.message);
         console.error("Error fetching token", err);
       });
   };
@@ -104,6 +111,7 @@ export default function DemoApi() {
     // clear previous token
     setToken("");
     setFetching(true);
+    setErrorText("");
     if (fetching) {
       console.log("Waiting for previous fetch to complete");
       return;
@@ -123,6 +131,7 @@ export default function DemoApi() {
           return response.text().then((error_txt) => {
             const message = `Status: ${response.status} Body: ${error_txt}`;
             setFetching(false);
+            setErrorText(message);
             throw new Error(message);
           });
         }
@@ -140,6 +149,7 @@ export default function DemoApi() {
       })
       .catch((err) => {
         setFetching(false);
+        setErrorText(err.message);
         console.error(`Error fetching token ${err}`);
       });
   }, [fetching, token, clientId, clientSecret, console]);
@@ -148,24 +158,31 @@ export default function DemoApi() {
     <View style={styles.container}>
       <TitleText>API Demo</TitleText>
       <LabelText>{fetching ? "fetching..." : "waiting"}</LabelText>
-      <TextInput
-        style={sharedStyles.input}
-        autoCapitalize="none"
-        value={clientId}
-        onChangeText={setClientId}
-        onSubmitEditing={handleToken}
-      />
-      <TextInput
-        style={sharedStyles.input}
-        autoCapitalize="none"
-        value={clientSecret}
-        onChangeText={setClientSecret}
-        onSubmitEditing={handleToken}
-      />
+      <View style={sharedStyles.horzContainer}>
+        <LabelText style={{ flex: 1 }}>Client ID:</LabelText>
+        <TextInput
+          style={[sharedStyles.input, { flex: 2.5 }]}
+          autoCapitalize="none"
+          value={clientId}
+          onChangeText={setClientId}
+          onSubmitEditing={handleToken}
+        />
+      </View>
+      <View style={sharedStyles.horzContainer}>
+        <LabelText style={{ flex: 1 }}>Secret:</LabelText>
+        <TextInput
+          style={[sharedStyles.input, { flex: 2.5 }]}
+          autoCapitalize="none"
+          value={clientSecret}
+          onChangeText={setClientSecret}
+          onSubmitEditing={handleToken}
+        />
+      </View>
       <ScrollView
         style={sharedStyles.scroll}
         contentContainerStyle={sharedStyles.scrollContainer}
       >
+        <LabelText style={{ color: "red" }}>{errorText}</LabelText>
         <BigButton title="Fetch Token" onPress={handleToken} />
         <LabelText>{token || "No token"}</LabelText>
         <BigButton title="Fetch Self" onPress={handleSelf} />

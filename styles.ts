@@ -102,7 +102,7 @@ const sharedStyles = StyleSheet.create({
     fontSize: 18,
     borderWidth: 1,
     padding: 7,
-    width: "100%",
+    flex: 1,
   },
   modalTop: {
     width: dims.width,

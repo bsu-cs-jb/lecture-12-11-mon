@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "demo-web-base",
-    "slug": "demo-web-base",
+    "name": "fetch-auth-demo",
+    "slug": "fetch-auth-demo",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
